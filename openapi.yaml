@@ -1,0 +1,62 @@
+openapi: 3.1.0
+info:
+  title: Server Configuration Item Document Generator
+  version: 1.0.0
+  description: >
+    Render a server CI PDF from a LaTeX/Templ file and a CI spec provided as YAML (file) or JSON.
+servers:
+  - url: https://your.api
+paths:
+  /process:
+    post:
+      operationId: renderPdf
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [template]
+              properties:
+                template:
+                  type: string
+                  format: binary
+                  description: LaTeX/Templ file to be rendered.
+                ci_yaml:
+                  type: string
+                  format: binary
+                  description: YAML file containing the CI specification (alternative to `ci`).
+                ci:
+                  type: string
+                  description: JSON string containing the CI specification (alternative to `ci_yaml`).
+              oneOf:
+                - required: [template, ci_yaml]
+                - required: [template, ci]
+            encoding:
+              template:
+                contentType: application/octet-stream
+              ci_yaml:
+                contentType: application/x-yaml
+              ci:
+                contentType: text/plain
+      responses:
+        "200":
+          description: Successfully compiled PDF returned as attachment.
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "400":
+          description: Bad Request, invalid or missing input fields.
+        "405":
+          description: Method Not Allowed, only POST is supported.
+        "415":
+          description: Unsupported Media Type, Content-Type must be multipart/form-data.
+        "500":
+          description: Internal Server Error, failed during processing or PDF compilation.
+      tags:
+        - rendering
+tags:
+  - name: rendering
+    description: Endpoints for generating rendered PDFs.

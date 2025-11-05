@@ -1,0 +1,71 @@
+ci:
+  author-company: My Company
+  author-department: My Department
+  classification: Internal
+
+  versions:
+  - number: 1.0
+    #date: 04.11.2024
+    user: MAS
+    description: Created document
+  
+  audit-versions:
+  - number: 1.0
+    #date: 04.11.2024
+    authority: MAS
+    remarks: No remarks
+
+  release-versions:
+  - number: 1.0
+    #date: 04.11.2024
+    authority: MAS
+    remarks: None
+
+  requirements:
+  - type: Software
+    name: PostGresQL
+
+  surrounding-systems:
+  - type: server
+    name: servername
+    address: servername.test.local
+    description: server description
+  - type: server
+    name: servername2
+    address: servername2.test.local
+    description: server2 description
+
+  description:
+    service-code: '800'
+    customer: '999'
+    description: Description of the Server
+    supplier: Name of the Supplier
+    disaster-lvl: 1
+  
+  configuration:
+    name: TESTSRV
+    fqdn: TESTSRV.LOCAL
+    domain: LOCAL
+    os: Windows Server 25
+    ram: 4
+    cpu: 8
+    ntp:
+    - 1.2.3.4
+    - 1.2.3.5
+    snmp: Enabled
+
+  interfaces:
+  - name: Management
+    zone: MGT
+    vlan: 211
+    dhcp: false
+    ip: 1.2.3.5
+    subnet: /24
+    dns:
+    - 8.8.8.8
+    - 1.1.1.1
+
+  accounts:
+  - type: Domain
+    name: admin
+    usage: Server Administrator

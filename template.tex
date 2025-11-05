@@ -1,0 +1,346 @@
+\documentclass[a4paper,11pt]{article}
+
+% --- PAGE GEOMETRY ---
+\usepackage[a4paper, top=2cm, bottom=2.5cm, left=2.3cm, right=2.3cm]{geometry}
+
+% --- FONTS & STYLE ---
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault} % Use sans-serif font
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{graphicx}
+
+% --- HEADER & FOOTER ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textbf{Server Documentation}}
+\fancyhead[R]{\textbf{\today}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% --- TABLES ---
+\usepackage{booktabs,array,xltabular}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash\hspace{0pt}}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash\hspace{0pt}}X}
+\setlength{\extrarowheight}{2pt}
+\setlength{\emergencystretch}{3em}
+
+% --- SECTION STYLING ---
+\titleformat{\section}
+  {\large\bfseries\sffamily}
+  {}{0pt}{}
+
+% --- CUSTOM GRAY SECTION BOX ---
+\newcommand{\graysection}[1]{%
+  \vspace{1.5em}%
+  \noindent%
+  \colorbox{gray!20}{%
+    \parbox{\dimexpr\linewidth-2\fboxsep}{\large\bfseries #1}%
+  }%
+  \par\vspace{0.8em}%
+}
+
+% --- DOCUMENT START ---
+\begin{document}
+
+% === TITLE PAGE ===
+\begin{titlepage}
+\centering
+\vspace*{2.5cm}
+
+{\Huge\bfseries CI: <<.CI.Configuration.Name>> \par}
+\vspace{0.5cm}
+{\Large Version 1.0 \par}
+\vspace{2cm}
+
+\begin{tabular}{ll}
+\textbf{Date:} & \today \\
+\textbf{Classification:} & <<.CI.Classification>> \\
+\end{tabular}
+
+\vfill
+\rule{0.9\textwidth}{0.4pt}\\[0.3cm]
+{\large Department: <<.CI.AuthorDepartment>> \\[0.2cm]
+<<.CI.AuthorCompany>> \\[0.2cm]
+\today}
+
+\end{titlepage}
+
+% === MAIN CONTENT ===
+\graysection{Version History}
+\begin{xltabular}{\textwidth}{@{} l l L{3.2cm} Y @{}}
+\toprule
+\textbf{Version} & \textbf{Date} & \textbf{User} & \textbf{Description} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Version} & \textbf{Date} & \textbf{User} & \textbf{Description} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{\emph{Continued on next page}}\\
+\endfoot
+\endlastfoot
+
+<<- if .CI.Versions >>
+  <<- range .CI.Versions >>
+    << if .Number >><< .Number >><< end >> & 
+    << if .Date >><< .Date >><< else >>\today<< end >> & 
+    << if .User >><< .User >><< end >> & 
+    << if .Description >><< .Description >><< end >> \\
+  <<- end >>
+<<- else >>
+  & & & \\
+<<- end >>
+\bottomrule
+\end{xltabular}
+
+\graysection{Audit Records}
+\begin{xltabular}{\textwidth}{@{} l l L{3.2cm} Y @{}}
+\toprule
+\textbf{Version} & \textbf{Date} & \textbf{Reviewing Authority} & \textbf{Remarks} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Version} & \textbf{Date} & \textbf{Reviewing Authority} & \textbf{Remarks} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{\emph{Continued on next page}}\\
+\endfoot
+\endlastfoot
+
+<<- if .CI.AuditVersions >>
+  <<- range .CI.AuditVersions >>
+    << if .Number >><< .Number >><< end >> & 
+    << if .Date >><< .Date >><< else >>\today<< end >> & 
+    << if .Authority >><< .Authority >><< end >> & 
+    << if .Remarks >><< .Remarks >><< end >> \\
+  <<- end >>
+<<- else >>
+  & & & \\
+<<- end >>
+\bottomrule
+\end{xltabular}
+
+\graysection{Release Log}
+\begin{xltabular}{\textwidth}{@{} l l L{3.2cm} Y @{}}
+\toprule
+\textbf{Version} & \textbf{Date} & \textbf{Releasing Authority} & \textbf{Remarks} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Version} & \textbf{Date} & \textbf{Releasing Authority} & \textbf{Remarks} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{\emph{Continued on next page}}\\
+\endfoot
+\endlastfoot
+
+<<- if .CI.ReleaseVersions >>
+  <<- range .CI.ReleaseVersions >>
+    << if .Number >><< .Number >><< end >> & 
+    << if .Date >><< .Date >><< else >>\today<< end >> & 
+    << if .Authority >><< .Authority >><< end >> & 
+    << if .Remarks >><< .Remarks >><< end >> \\
+  <<- end >>
+<<- else >>
+  & & & \\
+<<- end >>
+\bottomrule
+\end{xltabular}
+
+\newpage
+
+\graysection{Requirements}
+\begin{xltabular}{\textwidth}{@{} L{8cm} Y @{}}
+\toprule
+\textbf{Type} & \textbf{Name} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Type} & \textbf{Name} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{2}{r}{\emph{Continued on next page}}\\
+\endfoot
+\endlastfoot
+
+<<- if .CI.Requirements >>
+  <<- range .CI.Requirements >>
+    << if .Type >><< .Type >><< end >> & 
+    << if .Name >><< .Name >><< else >>\today<< end >> \\
+  <<- end >>
+<<- else >>
+  & \\
+<<- end >>
+\bottomrule
+\end{xltabular}
+
+\graysection{Surrounding Systems}
+\begin{xltabular}{\textwidth}{@{} L{2.5cm} L{3cm} L{5cm} Y @{}}
+\toprule
+\textbf{Type} & \textbf{Name} & \textbf{Address} & \textbf{Description} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Type} & \textbf{Name} & \textbf{Address} & \textbf{Description} \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{4}{r}{\emph{Continued on next page}}\\
+\endfoot
+\endlastfoot
+
+<<- if .CI.SurroundingSystems >>
+  <<- range .CI.SurroundingSystems >>
+    << if .Type >><< .Type >><< end >> & 
+    << if .Name >><< .Name >><< else >>\today<< end >> & 
+    << if .Address >><< .Address >><< end >> & 
+    << if .Description >><< .Description >><< end >> \\
+  <<- end >>
+<<- else >>
+  & & & \\
+<<- end >>
+\bottomrule
+\end{xltabular}
+
+\newpage
+
+\graysection{CI Description}
+\begin{xltabular}{\textwidth}{@{} L{8cm} Y @{}}
+\toprule
+\textbf{Attribute} & \textbf{Value} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Attribute} & \textbf{Value} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{2}{r}{\emph{Continued on next page}}\\
+\endfoot
+\endlastfoot
+
+<< if .CI.Description >>
+  Service Code & << .CI.Description.ServiceCode >>\\
+  Customer &  << .CI.Description.Customer >>\\
+  Description & << .CI.Description.Descr >>\\
+  Supplier &  << .CI.Description.Supplier >>\\
+  Disaster-Level &  << .CI.Description.DisasterLvl >>\\
+<<- else >>
+  Service Code &  \\
+  Customer &  \\
+  Description & \\
+  Supplier &  \\
+  Disaster-Level &  \\
+<<- end >>
+\bottomrule
+\end{xltabular}
+
+\graysection{CI Configuration}
+\begin{xltabular}{\textwidth}{@{} L{8cm} Y @{}}
+\toprule
+\textbf{Attribute} & \textbf{Value} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Attribute} & \textbf{Value} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{2}{r}{\emph{Continued on next page}}\\
+\endfoot
+\endlastfoot
+
+<< if .CI.Configuration >>
+  CI-Name & << .CI.Configuration.Name >> \\
+  FQDN & << .CI.Configuration.FQDN >> \\
+  OS & << .CI.Configuration.OS >> \\
+  RAM & << .CI.Configuration.RAM >> GB \\
+  CPU & << .CI.Configuration.CPU >> vCPU \\
+  Domain & << .CI.Configuration.Domain >> \\
+  NTP & <<- range $i, $ntp := .CI.Configuration.NTP >><< if gt $i 0 >> \\ & << end >><< $ntp >><< end >> \\
+  SNMP & << .CI.Configuration.SNMP >> \\
+<<- else >>
+  CI-Name & PostgreSQL-Server-01 \\
+  FQDN & pg01.internal.company.net \\
+  OS & Ubuntu Server 22.04 LTS \\
+  RAM & 32 GB \\
+  CPU & 8 vCPU \\
+  Domain & internal.company.net \\
+  NTP & ntp.internal.company.net \\
+  SNMP & Enabled \\
+<<- end >>
+
+\bottomrule
+\end{xltabular}
+
+\graysection{Interface Configuration}
+<<- range .CI.Interfaces >>
+
+\subsection*{Interface: << if .Name >><< .Name >><< else >>Unnamed<< end >>}
+\begin{xltabular}{\textwidth}{@{} L{8cm} Y @{}}
+\toprule
+\textbf{Attribute} & \textbf{Value} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Attribute} & \textbf{Value} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{2}{r}{\emph{Continued on next page}}\\
+\endfoot
+\endlastfoot
+
+Zone & << if .Zone >><< .Zone >><< else >>-<< end >> \\
+VLAN & << if .VLAN >><< .VLAN >><< else >>-<< end >> \\
+DHCP & << if .DHCP >><< if .DHCP >>Enabled<< else >>Disabled<< end >><< else >>-<< end >> \\
+IP & << if .IP >><< .IP >><< else >>-<< end >> \\
+Subnet & << if .Subnet >><< .Subnet >><< else >>-<< end >> \\
+DNS & << if .DNS >><< range $i, $d := .DNS >><< if gt $i 0 >>, << end >><< $d >><< end >><< else >>-<< end >> \\
+<< if and $.CI.Configuration $.CI.Configuration.Domain >>
+Domain & << $.CI.Configuration.Domain >> \\
+<< end >>
+
+\bottomrule
+\end{xltabular}
+
+<<- end >>
+
+\graysection{Accounts}
+\begin{xltabular}{\textwidth}{@{} L{3cm} L{5cm} Y @{}}
+\toprule
+\textbf{Type} & \textbf{Name} & \textbf{Usage} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Type} & \textbf{Name} & \textbf{Usage} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{3}{r}{\emph{Continued on next page}}\\
+\endfoot
+\endlastfoot
+
+<<- if .CI.Accounts >>
+  <<- range .CI.Accounts >>
+    << if .Type >><< .Type >><< end >> & 
+    << if .Name >><< .Name >><< else >>\today<< end >> & 
+    << if .Usage >><< .Usage >><< end >> \\
+  <<- end >>
+<<- else >>
+  & & \\
+<<- end >>
+\bottomrule
+\end{xltabular}
+
+\end{document}
