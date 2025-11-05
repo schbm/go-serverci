@@ -48,6 +48,9 @@ Build the image:
 docker build . -t go-serverci
 ```
 Run the container:
+```
+docker run -p 8080:8080 go-serverci
+```
 
 
 ## Data and Output Modification
@@ -57,5 +60,5 @@ The program will inject the `Root` data into the template.
 - The final layout tweaks and template control can be done by editing the `template.tex` file.
 
 # Possible Future Additions
-[] Support for easy layout and data modification
-[] Escape special Tex characters
+- [ ] Support for easy layout and data modification
+- [ ] Escape special Tex characters
