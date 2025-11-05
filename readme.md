@@ -1,7 +1,7 @@
 # go-serverci
-go-serverci is a simple CLI application that generates ITIL configuration item documents for servers out.
+go-serverci is a simple application that generates ITIL configuration item PDF's for servers.
 Since the final needed structure of the document is highly dependent on an individual basis the code must be tweaked manually.
-I do not provide a simple generic way to do this.
+I do not provide a simple generic way to do this (yet).
 
 # Usage
 ```
